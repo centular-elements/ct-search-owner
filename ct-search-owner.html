@@ -32,21 +32,12 @@ Element for searching across owners
         --paper-input-container-label-floating: {
           margin-left: 10px;
         };
-        --paper-input-error: {
-          left: auto !important;
-          right: 20px !important;
-          font-style: italic;
-        };
       }
       .main-section {
         margin-top:20px;
       }
-      iron-icon.user-online{
-        --iron-icon-fill-color:{#4d96bb;};
-      }
-      /*local dropdown menu */
-      paper-menu {
-        width: 400px;
+      .search-field {
+        margin-bottom: 10px;
       }
     </style>
 
@@ -58,19 +49,19 @@ Element for searching across owners
 
         <div class="row">
           <paper-material>
-            <div class="col-sm-3">
+            <div class="col-sm-2 search-field">
               <paper-input id="txtFirstName" label="First Name"></paper-input>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2 search-field">
               <paper-input id="txtLastName" label="Last Name"></paper-input>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2 search-field">
               <paper-input id="txtEmail" label="E-Mail Address"></paper-input>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2 search-field">
               <paper-input id="txtPhone" label="Phone Number"></paper-input>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2 search-field">
               <paper-input id="txtIdNumber" label="ID Number"></paper-input>
             </div>
             <div class="col-sm-2 bordered">
@@ -82,33 +73,33 @@ Element for searching across owners
         <div class="row">
           <div class="col-xs-12">
             <!--<template is="dom-if" if="{{_computeHasData(userList)}}">-->
-              <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover table-middle">
-                  <thead>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>ID Number</th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                    <template is="dom-repeat" items="{{ _ownersList }}">
-                      <tr>
-                        <td><span>[[item.name]]</span> <span>[[item.surname]]</span></td>
-                        <td>item.email</td>
-                        <td>item.phone</td>
-                        <td>item.idNumber</td>
-                        <td class="text-center"><paper-button class="table-button btn-primary btn-sm" on-tap="_viewOwnerTapped" raised>View</paper-button></td>
-                      </tr>
-                    </template>
-                  </tbody>
-                </table>
-              </div>
-              <!--<div class="col-xs-12">
-                <nav aria-label="Page navigation">
-                  <mercury-paginator perpage="50" items="{{userList}}"></mercury-paginator>
-                </nav>
-              </div>-->
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover table-middle">
+                <thead>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>ID Number</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                <template is="dom-repeat" items="{{ _ownersList }}">
+                  <tr>
+                    <td><span>[[item.name]]</span> <span>[[item.surname]]</span></td>
+                    <td>[[item.email]]</td>
+                    <td>[[item.phone]]</td>
+                    <td>[[item.idNumber]]</td>
+                    <td class="text-center"><paper-button class="table-button btn-primary btn-sm" on-tap="_viewOwnerTapped" raised>View</paper-button></td>
+                  </tr>
+                </template>
+                </tbody>
+              </table>
+            </div>
+            <!--<div class="col-xs-12">
+              <nav aria-label="Page navigation">
+                <mercury-paginator perpage="50" items="{{userList}}"></mercury-paginator>
+              </nav>
+            </div>-->
             <!--</template>-->
 
             <!--<template is="dom-if" if="{{!_computeHasData(userList)}}">
@@ -135,7 +126,7 @@ Element for searching across owners
         },
       },
 
-      ready : function() {
+      ready: function() {
         this.init();
       },
 
@@ -143,29 +134,33 @@ Element for searching across owners
         this.init();
       },
 
-      init : function(){
+      init: function() {
         this.refreshing = true;
         this._getAllOwners();
       },
 
       _getAllOwners: function() {
         this.$.ownersApi.filterOwners('1', '20')
-          .then(this._setPropertyResponseResults(this, '_ownersList'))
-          .catch(this.fire.bind(this, 'toast', {message: 'Failed to load owners', type: 'danger'}))
-          .finally(this.set.bind(this, 'refreshing', false));
+                .then(this._setPropertyResponseResults.bind(this, '_ownersList'))
+                .catch(this.fire.bind(this, 'toast', {message: 'Failed to load owners', type: 'danger'}))
+                .finally(this.set.bind(this, 'refreshing', false));
       },
 
       _searchTapped: function (e) {
-        var firstName = this.$.txtFirstName.value;
-        var lastName = this.$.txtLastName.value;
-        var email = this.$.txtEmail.value;
-        var phone = this.$.txtPhone.value;
-        var idNumber = this.$.txtIdNumber.value;
+        var firstName = this.$.txtFirstName.value != '' ? this.$.txtFirstName.value : null;
+        var lastName = this.$.txtLastName.value != '' ? this.$.txtLastName.value : null;
+        var email = this.$.txtEmail.value != '' ? this.$.txtEmail.value : null;
+        var phone = this.$.txtPhone.value != '' ? this.$.txtPhone.value : null;
+        var idNumber = this.$.txtIdNumber.value != '' ? this.$.txtIdNumber.value : null;
 
         this.$.ownersApi.searchOwners('1', '20', firstName, lastName, email, phone, idNumber)
-          .then(this._setPropertyResponseResults(this, '_ownersList'))
-          .catch(this.fire.bind(this, 'toast', {message: 'Failed to search owners', type: 'danger'}))
-          .finally(this.set.bind(this, 'refreshing', false));
+                .then(this._setPropertyResponseResults.bind(this, '_ownersList'))
+                .catch(this.fire.bind(this, 'toast', {message: 'Failed to search owners', type: 'danger'}))
+                .finally(this.set.bind(this, 'refreshing', false));
+      },
+
+      _viewOwnerTapped: function (e) {
+        this.fire('ct-page-to', '/view-owner/' + e.model.item.id + "/details");
       }
     });
   </script>
