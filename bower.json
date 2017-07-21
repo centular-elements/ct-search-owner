@@ -9,7 +9,8 @@
     "paper-button": "PolymerElements/paper-button#v1.0.15",
     "ct-shared-styles": "git://github.com/Centular/shared-styles.git",
     "ct-core-utils": "git://github.com/centular-elements/ct-core-utils",
-    "ct-owners-api": "centular-elements/ct-owners-api"
+    "ct-owners-api": "centular-elements/ct-owners-api",
+    "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^1.0.6"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

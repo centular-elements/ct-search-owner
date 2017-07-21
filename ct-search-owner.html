@@ -5,6 +5,8 @@
 
 <link rel="import" href="../ct-core-utils/ct-api-consumer-behaviour.html">
 <link rel="import" href="../ct-owners-api/ct-owners-api.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+
 <!--
 `ct-search-owner`
 Element for searching across owners
@@ -47,7 +49,7 @@ Element for searching across owners
     <div class="main-section">
       <div class="container-fluid">
 
-        <div class="row">
+        <!--<div class="row">
           <paper-material>
             <div class="col-sm-2 search-field">
               <paper-input id="txtFirstName" label="First Name"></paper-input>
@@ -68,7 +70,7 @@ Element for searching across owners
               <paper-button class="btn btn-primary btn-block" on-tap="_searchTapped" raised>Search</paper-button>
             </div>
           </paper-material>
-        </div>
+        </div>-->
 
         <div class="row">
           <div class="col-xs-12">
@@ -76,16 +78,27 @@ Element for searching across owners
             <div class="table-responsive">
               <table class="table table-striped table-bordered table-hover table-middle">
                 <thead>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>ID Number</th>
-                <th>Action</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>ID Number</th>
+                  <th>Action</th>
                 </thead>
+                <iron-a11y-keys id="a11y" keys="enter" on-keys-pressed="_searchTapped"></iron-a11y-keys>
+                <tr>
+                  <td><paper-input id="txtFirstName" label="First Name"></paper-input></td>
+                  <td><paper-input id="txtLastName" label="Last Name"></paper-input></td>
+                  <td><paper-input id="txtEmail" label="E-Mail Address"></paper-input></td>
+                  <td><paper-input id="txtPhone" label="Phone Number"></paper-input></td>
+                  <td><paper-input id="txtIdNumber" label="ID Number"></paper-input></td>
+                  <td><paper-button class="btn btn-primary btn-block" on-tap="_searchTapped" raised>Search</paper-button></td>
+                </tr>
                 <tbody>
                 <template is="dom-repeat" items="{{ _ownersList }}">
                   <tr>
-                    <td><span>[[item.name]]</span> <span>[[item.surname]]</span></td>
+                    <td>[[item.name]]</td>
+                    <td>[[item.surname]]</td>
                     <td>[[item.email]]</td>
                     <td>[[item.phone]]</td>
                     <td>[[item.idNumber]]</td>
