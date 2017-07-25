@@ -26,7 +26,12 @@ Element for searching across owners
           border-right:1px solid #ccc;
           border-bottom: none;
           padding: 0;
+
         };
+        --paper-input-container-input: {
+          margin-left: 10px !important;
+          width: calc(100% - 20px);
+        }
         /*padding to move from border */
         --paper-input-container-label: {
           margin-left: 10px;
@@ -41,6 +46,9 @@ Element for searching across owners
       .search-field {
         margin-bottom: 10px;
       }
+      .table-search-button-field {
+        vertical-align: middle !important;
+      }
     </style>
 
     <ct-owners-api id="ownersApi"></ct-owners-api>
@@ -48,30 +56,6 @@ Element for searching across owners
 
     <div class="main-section">
       <div class="container-fluid">
-
-        <!--<div class="row">
-          <paper-material>
-            <div class="col-sm-2 search-field">
-              <paper-input id="txtFirstName" label="First Name"></paper-input>
-            </div>
-            <div class="col-sm-2 search-field">
-              <paper-input id="txtLastName" label="Last Name"></paper-input>
-            </div>
-            <div class="col-sm-2 search-field">
-              <paper-input id="txtEmail" label="E-Mail Address"></paper-input>
-            </div>
-            <div class="col-sm-2 search-field">
-              <paper-input id="txtPhone" label="Phone Number"></paper-input>
-            </div>
-            <div class="col-sm-2 search-field">
-              <paper-input id="txtIdNumber" label="ID Number"></paper-input>
-            </div>
-            <div class="col-sm-2 bordered">
-              <paper-button class="btn btn-primary btn-block" on-tap="_searchTapped" raised>Search</paper-button>
-            </div>
-          </paper-material>
-        </div>-->
-
         <div class="row">
           <div class="col-xs-12">
             <!--<template is="dom-if" if="{{_computeHasData(userList)}}">-->
@@ -92,7 +76,7 @@ Element for searching across owners
                   <td><paper-input id="txtEmail" label="E-Mail Address"></paper-input></td>
                   <td><paper-input id="txtPhone" label="Phone Number"></paper-input></td>
                   <td><paper-input id="txtIdNumber" label="ID Number"></paper-input></td>
-                  <td><paper-button class="btn btn-primary btn-block" on-tap="_searchTapped" raised>Search</paper-button></td>
+                  <td class="table-search-button-field"><paper-button class="btn btn-primary btn-sm btn-block" on-tap="_searchTapped" raised>Search</paper-button></td>
                 </tr>
                 <tbody>
                 <template is="dom-repeat" items="{{ _ownersList }}">
@@ -179,4 +163,3 @@ Element for searching across owners
   </script>
 
 </dom-module>
-
